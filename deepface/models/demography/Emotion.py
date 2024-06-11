@@ -99,3 +99,16 @@ def load_model(
     model = weight_utils.load_model_weights(model=model, weight_file=weight_file)
 
     return model
+
+
+if __name__ == "__main__":
+    model = load_model()
+
+    home = folder_utils.get_deepface_home()
+
+    import pathlib
+    custom_path = pathlib.Path(home) / ".deepface" / "custom"
+    custom_path.mkdir(exist_ok=True)
+
+    import tensorflowjs as tfjs
+    tfjs.converters.save_keras_model(model, custom_path)
