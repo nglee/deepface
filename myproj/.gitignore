@@ -1,0 +1,5 @@
+images/
+images_output/
+node_modules/
+
+*.base64.js

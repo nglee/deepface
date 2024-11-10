@@ -3,7 +3,7 @@ import numpy as np
 import cv2
 
 # project dependencies
-from deepface.commons import package_utils, weight_utils
+from deepface.commons import package_utils, weight_utils, folder_utils
 from deepface.models.Demography import Demography
 from deepface.commons.logger import Logger
 
@@ -84,9 +84,9 @@ def load_model(
 
     # fully connected neural networks
     model.add(Dense(1024, activation="relu"))
-    model.add(Dropout(0.2))
+    #model.add(Dropout(0.2))
     model.add(Dense(1024, activation="relu"))
-    model.add(Dropout(0.2))
+    #model.add(Dropout(0.2))
 
     model.add(Dense(num_classes, activation="softmax"))
 
@@ -96,6 +96,7 @@ def load_model(
         file_name="facial_expression_model_weights.h5", source_url=url
     )
 
+    model.summary()
     model = weight_utils.load_model_weights(model=model, weight_file=weight_file)
 
     return model
@@ -112,3 +113,8 @@ if __name__ == "__main__":
 
     import tensorflowjs as tfjs
     tfjs.converters.save_keras_model(model, custom_path)
+
+# consider removing flatten layer and using global average pooling layer
+# consider removing dropout layers
+# check the model summary
+# check load_weights's skip_mismatch parameter and by_name parameter

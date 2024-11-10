@@ -99,3 +99,13 @@ def analyze(
         logger.error(str(err))
         logger.error(tb_str)
         return {"error": f"Exception while analyzing: {str(err)} - {tb_str}"}, 400
+
+if __name__ == "__main__":
+    # load images in myproj/images and run analyze
+    img_dir = "myproj/images"
+    import os
+    # iterate over all images in the directory in the order of the file names
+    for img_name in sorted(os.listdir(img_dir)):
+        img_path = os.path.join(img_dir, img_name)
+        analysis = analyze(img_path,["emotion"], "opencv", False, True, False)
+        print(f"{img_name}: {analysis['results'][0]['dominant_emotion']})")
